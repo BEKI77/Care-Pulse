@@ -7,7 +7,8 @@ import {Form } from "@/components/ui/form"
 import CustomFormField from "../CustomFormField"
 import SubmitButoon from "../ui/SubmitButoon"
 import { useState } from "react"
-
+import { useRouter } from "next/navigation"
+import { createUser } from "@/lib/actions/patient.actions"
 
 
 export enum FormFieldType {
@@ -22,6 +23,7 @@ export enum FormFieldType {
 
 export const PatientForm = ()=> {
   const [isLoading, setLoading] = useState(false);
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
@@ -37,18 +39,16 @@ export const PatientForm = ()=> {
     setLoading(true);
     console.log(values)
     try {
-      // const response = await fetch("https://api.example.com", {
-      //   method: "POST",
-      //   body: JSON.stringify(values),
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // })
-      // if (response.ok) {
-      //   // Success
-      // } else {
-      //   // Error
-      // }
+      // const userData = {name, email,phone };
+      const api = process.env.API_KEY;
+
+      const user = await createUser(values);
+      console.log(user);
+      console.log("here000");
+      console.log(api);
+      if (user){
+        router.push(`/appointment/${user.$id}`);
+      }
     } catch (error) {
       // Error
       console.error(error);
@@ -65,8 +65,8 @@ export const PatientForm = ()=> {
         <CustomFormField 
           fieldType = {FormFieldType.INPUT}
           control = {form.control}
-          name = "username"
-          label = "Username"
+          name = "name"
+          label = "Name"
           placeholder = "Jhon Doe"
           iconSrc = "/assets/icons/user.svg"
           iconAlt = "user"
