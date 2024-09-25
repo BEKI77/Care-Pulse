@@ -37,21 +37,14 @@ export const PatientForm = ()=> {
  
   async function onSubmit(values: z.infer<typeof UserFormValidation>) {
     setLoading(true);
-    console.log(values)
     try {
-      // const userData = {name, email,phone };
-      const api = process.env.API_KEY;
-
       const user = await createUser(values);
-      console.log(user);
-      console.log("here000");
-      console.log(api);
+      
       if (user){
-        router.push(`/appointment/${user.$id}`);
+        router.push(`/patient/${user.$id}/register/`);
       }
-    } catch (error) {
-      // Error
-      console.error(error);
+    }catch (error){
+        console.error(error);
     }
   }
   return (
@@ -87,8 +80,7 @@ export const PatientForm = ()=> {
           control = {form.control}
           name = "phone"
           label = "Phone Number"
-          placeholder = "12-34-56-78-90"
-  
+          placeholder = "12-34-56-78-90" 
         />
 
       <SubmitButoon isLoading = {isLoading}> Get Started</SubmitButoon>

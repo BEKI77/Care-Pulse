@@ -68,6 +68,60 @@ const RenderInput = ({field, props}:{ field:any, props:CustomProps }) => {
             />
           </FormControl>
         )
+      case FormFieldType.CHECKBOX:
+        return (
+          <FormControl>
+            <input 
+              type="checkbox"
+              {...field}
+              className="shad-checkbox"
+            />
+          </FormControl>
+        )
+      case FormFieldType.DATE_PICKER:
+        return (
+          <FormControl>
+            <Input 
+              type="date"
+              {...field}
+              className="shad-input"
+            />
+          </FormControl>
+        )
+      case FormFieldType.SELECT:
+        return (
+          <FormControl>
+            <select className="shad-input">
+              Male
+            </select>
+          </FormControl>
+        )
+      case FormFieldType.TEXTAREA:
+        return (
+          <FormControl>
+            <textarea 
+              {...field}
+              className="shad-input"
+            />
+          </FormControl>
+        )
+      case FormFieldType.SKELETON:
+        return (
+          <div className="flex rounded-md border border-dark-500 bg-dark-400" >
+            {iconSrc && (
+              <Image 
+                src = {iconSrc}
+                height = {24}
+                width = {24}
+                alt = {iconAlt || "icon"}
+                className = "ml-2"
+              />
+            )}
+            <FormControl>
+              {props.renderSkeleton && props.renderSkeleton(field)}
+            </FormControl>
+          </div>
+        )
 
     } 
 }
